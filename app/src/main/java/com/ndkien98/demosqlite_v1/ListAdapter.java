@@ -1,53 +1,66 @@
 package com.ndkien98.demosqlite_v1;
 
-import android.content.Context;
+
+import android.app.Activity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
+
 
 public class ListAdapter extends BaseAdapter {
 
-    Context context;
-    List<Integer> LIST_ID;
-    List<String> LIST_NAME,LIST_ADDRESS,LIST_PHONE;
+    private ArrayList<Student> list;
+    private Activity activity;
 
-    public ListAdapter(Context context, ArrayList<Integer> id
-                        ,ArrayList<String> name
-                        ,ArrayList<String> address
-                        ,ArrayList<String> phone){
-        this.context=context;
-        this.LIST_ID=id;
-        this.LIST_NAME=name;
-        this.LIST_ADDRESS=address;
-        this.LIST_PHONE=phone;
+
+    public ListAdapter(ArrayList<Student> list, Activity activity) {
+        this.list = list;
+        this.activity = activity;
+
     }
-
 
     @Override
     public int getCount() {
-        return LIST_ID.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return list.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
-    public View getView(int position, View child, ViewGroup parent) {
-        return child;
+    public View getView(int i, View view, ViewGroup viewGroup) {
+
+        // anh xa dua cac item va layout
+        LayoutInflater inflater = this.activity.getLayoutInflater();
+        view = inflater.inflate(R.layout.item_name,null); // danh dau item sang view
+
+        TextView textView_id = view.findViewById(R.id.Item_txt_id); // tao ra text de hien thi tren list view
+        TextView textView_name = view.findViewById(R.id.Item_txt_name);
+        TextView textView_adress = view.findViewById(R.id.Item_txt_adress);
+        TextView textView_phone = view.findViewById(R.id.Item_txt_phone);
+
+
+        // set gitri khi hien thi len view , txt phai trung vs id trong item
+        textView_id.setText(String.valueOf(this.list.get(i).getId()));
+        textView_name.setText(this.list.get(i).getName());
+        textView_adress.setText(this.list.get(i).getAddress());
+        textView_phone.setText(this.list.get(i).getPhone_number());
+
+        return view;
     }
-
-
-
 }
 

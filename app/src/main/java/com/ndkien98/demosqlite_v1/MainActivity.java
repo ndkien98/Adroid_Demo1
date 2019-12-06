@@ -12,9 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.List;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,19 +36,13 @@ public class MainActivity extends AppCompatActivity {
 
         databaseHandler = new DatabaseHandler(this);
 
-        Student student = new Student(1,"kien","song phuong","12345");
-        databaseHandler.addStudents(student);
-        Student student1 = (Student) databaseHandler.getStudents(1);
+
+        Student student1 =  databaseHandler.getStudents(1);
         txtid.setText(String.valueOf(student1.getId()));
         txtUsername.setText(student1.getName());
         txtPassword.setText(student1.getPhone_number());
         txtPhone.setText(student1.getAddress());
-        Student student4 = new Student(4,"kien4","song phuong","12345");
-        Student student2 = new Student(2,"kien2","song phuong","12345");
-        Student student3 = new Student(3,"kien3","song phuong","12345");
-        databaseHandler.addStudents(student2);
-        databaseHandler.addStudents(student3);
-        databaseHandler.addStudents(student4);
+
 
         this.button.setOnClickListener(new View.OnClickListener() {
             @Override

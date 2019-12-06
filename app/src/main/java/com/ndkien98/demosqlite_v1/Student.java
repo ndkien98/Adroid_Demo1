@@ -7,6 +7,15 @@ public class Student {
     String name;
     String address;
     String phone_number;
+    Integer image;
+
+    public Integer getImage() {
+        return image;
+    }
+
+    public void setImage(Integer image) {
+        this.image = image;
+    }
 
     public int getId() {
         return id;
@@ -47,6 +56,14 @@ public class Student {
         this.name = name;
         this.address = address;
         this.phone_number = phone_number;
+    }
+
+    public Student(int id, String name, String address, String phone_number, Integer image) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phone_number = phone_number;
+        this.image = image;
     }
 
     public Student() {

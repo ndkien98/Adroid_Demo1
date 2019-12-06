@@ -84,17 +84,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return student;
     }
 
-    public List<Student> getAllStudents(){
+    public ArrayList<Student> getAllStudents(){
 
-        List<Student> studentList = new ArrayList<>();
-        String query = "SELECT * from"+TABLE_NAME;
+        ArrayList<Student> studentList = new ArrayList<>();
+
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query,null);
+        Cursor cursor = db.rawQuery(String.format("select * from %s", TABLE_NAME),null);
         cursor.moveToFirst();
 
         while (cursor.isAfterLast()== false){
-            Student student = new Student(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3));
+
+            int id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
+            String name = cursor.getString(cursor.getColumnIndex(KEY_NAME));
+            String adress = cursor.getColumnName(cursor.getColumnIndex(KEY_ADDRESS));
+            String phone = cursor.getColumnName(cursor.getColumnIndex(KEY_PHONR_NUMBER));
+            Student student = new Student(id,name,adress,phone);
             studentList.add(student);
             cursor.moveToNext();
         }
