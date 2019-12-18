@@ -87,8 +87,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<Student> getAllStudents(){
 
         ArrayList<Student> studentList = new ArrayList<>();
-
-
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(String.format("select * from %s", TABLE_NAME),null);
         cursor.moveToFirst();
@@ -123,6 +121,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         database.delete(TABLE_NAME,KEY_ID+"=?",new String[]{String.valueOf(id)});
         database.close();
+    }
+
+
+    public NhanVien getNhanVien(String username,String password){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        //Cursor cursor =sqLiteDatabase.query(TABLE_NHANVIEN,null,KEY_NHAN_VIEN_USERNAME+"=?"+KEY_NHAN_VIEN_PASSWORD+"=?",new String []{username,password},null,null,null);
+        Cursor cursor = sqLiteDatabase.rawQuery(String.format("select * from %s where %s='%s' and %s='%s'", TABLE_NHANVIEN,KEY_NHAN_VIEN_USERNAME,username,KEY_NHAN_VIEN_PASSWORD,password),null);
+        NhanVien nhanVien = null;
+        try {
+            if (cursor!=null){
+                cursor.moveToNext();
+            }
+            int id = cursor.getInt(cursor.getColumnIndex(KEY_NHAN_VIEN_ID));
+            String name = cursor.getString(cursor.getColumnIndex(KEY_NHAN_VIEN_NAME));
+            String usename1 = cursor.getString(cursor.getColumnIndex(KEY_NHAN_VIEN_USERNAME));
+            String pass = cursor.getString(cursor.getColumnIndex(KEY_NHAN_VIEN_PASSWORD));
+            String diachi = cursor.getString(cursor.getColumnIndex(KEY_NHAN_VIEN_DIACHI));
+            String phongban = cursor.getString(cursor.getColumnIndex(KEY_NHAN_VIEN_PHONG_BAN));
+            int namsinh = cursor.getInt(cursor.getColumnIndex(KEY_NHAN_VIEN_NAMSINH));
+            int luong = cursor.getInt(cursor.getColumnIndex(KEY_NHAN_VIEN_LUONG));
+            int quyen  = cursor.getInt(cursor.getColumnIndex(KEY_NHAN_VIEN_QUYEN));
+            nhanVien = new NhanVien(id,name,usename1,pass,diachi,phongban,namsinh,luong,quyen);
+        }catch (Exception e){
+            System.out.println("User null");
+        }
+        return nhanVien;
     }
 
 }
